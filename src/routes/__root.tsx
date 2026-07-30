@@ -81,15 +81,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Eagon Shop — Affordable Luxury Womenswear" },
+      { title: "Eagon Shop — Affordable Luxury Womenswear Online" },
       {
         name: "description",
         content:
-          "Eagon Shop: premium-feel Indian and western wear for women at everyday prices. Free shipping above ₹999, easy 7-day returns.",
+          "Shop Eagon Shop's edit of western and Indian wear for women — dresses, kurtis, co-ord sets and plazo. Free shipping above ₹999, 7-day returns.",
       },
       { property: "og:site_name", content: "Eagon Shop" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "Eagon Shop — Affordable Luxury Womenswear Online" },
+      { name: "twitter:title", content: "Eagon Shop — Affordable Luxury Womenswear Online" },
+      { property: "og:description", content: "Shop Eagon Shop's edit of western and Indian wear for women — dresses, kurtis, co-ord sets and plazo. Free shipping above ₹999, 7-day returns." },
+      { name: "twitter:description", content: "Shop Eagon Shop's edit of western and Indian wear for women — dresses, kurtis, co-ord sets and plazo. Free shipping above ₹999, 7-day returns." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/2a3288af-b251-4a92-ac12-d493ed61289b/id-preview-2b3135d4--f420e2bd-5e51-40e5-8bd4-de61182b2fa3.lovable.app-1785439357583.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/2a3288af-b251-4a92-ac12-d493ed61289b/id-preview-2b3135d4--f420e2bd-5e51-40e5-8bd4-de61182b2fa3.lovable.app-1785439357583.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

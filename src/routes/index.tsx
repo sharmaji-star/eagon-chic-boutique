@@ -18,10 +18,10 @@ export const Route = createFileRoute("/")({
         content:
           "Shop Eagon Shop's edit of western and Indian wear for women — dresses, kurtis, co-ord sets and plazo. Free shipping above ₹999, 7-day returns.",
       },
-      { property: "og:title", content: "Eagon Shop — Affordable Luxury Womenswear" },
+      { property: "og:title", content: "Eagon Shop — Affordable Luxury Womenswear Online" },
       {
         property: "og:description",
-        content: "Western and Indian wear for women, designed to feel premium and priced for every day.",
+        content: "Shop Eagon Shop's edit of western and Indian wear for women — dresses, kurtis, co-ord sets and plazo. Free shipping above ₹999, 7-day returns.",
       },
       { property: "og:url", content: "/" },
     ],

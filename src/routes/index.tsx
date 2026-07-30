@@ -4,7 +4,10 @@ import hero from "@/assets/hero.jpg";
 import detail from "@/assets/detail-1.jpg";
 import { Reveal } from "@/components/site/Reveal";
 import { ProductCard } from "@/components/site/ProductCard";
-import { byTag, categories, products, reviewsList } from "@/data/products";
+import { byTag, categories, products, reviewsList, type Product } from "@/data/products";
+
+const pick = (...lists: Product[][]) =>
+  [...new Map(lists.flat().map((p) => [p.slug, p])).values()].slice(0, 4);
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -136,7 +139,7 @@ function Home() {
       <section className="mx-auto max-w-7xl px-6 pb-20">
         <SectionHead eyebrow="Loved right now" title="Trending Collection" href="/shop" />
         <div className="grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-4">
-          {byTag("trending").concat(byTag("new")).slice(0, 4).map((p, i) => (
+          {pick(byTag("trending"), byTag("new")).map((p, i) => (
             <Reveal key={p.slug} delay={i * 70}>
               <ProductCard product={p} />
             </Reveal>
@@ -161,7 +164,7 @@ function Home() {
       <section className="mx-auto max-w-7xl px-6 py-20">
         <SectionHead eyebrow="Customer favourites" title="Best Sellers" href="/shop" />
         <div className="grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-4">
-          {byTag("bestseller").concat(products.slice(0, 4)).slice(0, 4).map((p, i) => (
+          {pick(byTag("bestseller"), products).map((p, i) => (
             <Reveal key={p.slug} delay={i * 70}>
               <ProductCard product={p} />
             </Reveal>
@@ -172,7 +175,7 @@ function Home() {
       <section className="mx-auto max-w-7xl px-6 pb-20">
         <SectionHead eyebrow="Just landed" title="New Arrivals" href="/shop" />
         <div className="grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-4">
-          {byTag("new").concat(products.slice(2)).slice(0, 4).map((p, i) => (
+          {pick(byTag("new"), products.slice(2)).map((p, i) => (
             <Reveal key={p.slug} delay={i * 70}>
               <ProductCard product={p} />
             </Reveal>

@@ -58,7 +58,7 @@ export const products: Product[] = [
     tags: ["trending", "bestseller"],
   },
   {
-    slug: "blue-chanderi-kurta-set",
+    slug: "premium-co-ord-set"
     name: "Premium Co-ord Set",
     price: 1699,
     mrp: 3199,

@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Truck, RotateCcw, ShieldCheck, Star } from "lucide-react";
-import heroAsset from "@/assets/hero-purple-tunic.jpg.asset.json";
+import heroAsset from "@/assets/IMG-20260730-WA0120.jpg";
 import detail from "@/assets/detail-1.jpg";
 import { Reveal } from "@/components/site/Reveal";
 import { ProductCard } from "@/components/site/ProductCard";
@@ -51,7 +51,7 @@ function Home() {
     <main>
       <section className="relative">
         <img
-          src={heroAsset.url}
+          src={heroAsset}
           alt="Model wearing a purple floral printed tunic with teal tapered trousers"
           width={886}
           height={1181}

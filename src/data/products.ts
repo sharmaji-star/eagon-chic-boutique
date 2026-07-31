@@ -2,7 +2,7 @@ import western from "@/assets/cat-western.jpg";
 import indian from "@/assets/cat-indian.jpg";
 import coord from "@/assets/cat-coord.jpg";
 import tops from "@/assets/cat-tops.jpg";
-import blueChanderi from "@/assets/product-blue-chanderi-kurta.jpg.asset.json";
+import premiumCoord from "@/assets/CMG-20260719-WA0171.jpg";
 import detail from "@/assets/detail-1.jpg";
 
 export type Product = {
@@ -64,7 +64,7 @@ export const products: Product[] = [
     mrp: 3199,
     category: "Co-ord Sets",
     group: "Indian Wear",
-    images: [blueChanderi.url, detail, coord],
+    images: [premiumCoord, detail, coord],
     colors: [
       { name: "Teal Blue", hex: "#1e4a5f" },
       { name: "Ivory", hex: "#f3e9d9" },

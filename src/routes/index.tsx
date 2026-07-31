@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Truck, RotateCcw, ShieldCheck, Star } from "lucide-react";
-import hero from "@/assets/hero.jpg";
+import heroAsset from "@/assets/hero-pink-floral.jpg.asset.json";
 import detail from "@/assets/detail-1.jpg";
 import { Reveal } from "@/components/site/Reveal";
 import { ProductCard } from "@/components/site/ProductCard";
@@ -51,11 +51,11 @@ function Home() {
     <main>
       <section className="relative">
         <img
-          src={hero}
-          alt="Model wearing a beige Eagon Shop co-ord set"
-          width={1600}
-          height={1200}
-          className="h-[86vh] min-h-[520px] w-full object-cover object-[70%_center]"
+          src={heroAsset.url}
+          alt="Model wearing a pink floral tiered mini dress with a straw hat"
+          width={1024}
+          height={1536}
+          className="h-[86vh] min-h-[520px] w-full object-cover object-[50%_20%]"
         />
         <div className="hero-veil absolute inset-0" />
         <div className="absolute inset-0 flex items-center">

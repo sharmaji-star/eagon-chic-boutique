@@ -59,10 +59,10 @@ export const products: Product[] = [
   },
   {
     slug: "blue-chanderi-kurta-set",
-    name: "Blue Chanderi Kurta Set",
+    name: "Premium Co-ord Set",
     price: 1699,
     mrp: 3199,
-    category: "Kurta Sets",
+    category: "Co-ord Sets",
     group: "Indian Wear",
     images: [blueChanderi.url, detail, coord],
     colors: [

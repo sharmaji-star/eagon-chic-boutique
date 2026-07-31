@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Truck, RotateCcw, ShieldCheck, Star } from "lucide-react";
-import hero from "@/assets/hero.jpg";
+import heroAsset from "@/assets/hero-pink-floral.jpg.asset.json";
 import detail from "@/assets/detail-1.jpg";
 import { Reveal } from "@/components/site/Reveal";
 import { ProductCard } from "@/components/site/ProductCard";

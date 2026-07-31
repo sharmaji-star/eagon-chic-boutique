@@ -2,6 +2,7 @@ import western from "@/assets/cat-western.jpg";
 import indian from "@/assets/cat-indian.jpg";
 import coord from "@/assets/cat-coord.jpg";
 import tops from "@/assets/cat-tops.jpg";
+import blueChanderi from "@/assets/product-blue-chanderi-kurta.jpg.asset.json";
 import detail from "@/assets/detail-1.jpg";
 
 export type Product = {

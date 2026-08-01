@@ -63,8 +63,9 @@ export const products: Product[] = [
     price: 300,
     mrp: 699,
     category: "Kurtis",
-    group: "Indian Wear",
-    images: [k35.url, detail],
+group: "Indian Wear",
+gender: "Women",
+images: [k35.url, detail],
     colors: [
       { name: "Blush Pink", hex: "#f4a7b0" },
       { name: "Sky", hex: "#a9cfe3" },

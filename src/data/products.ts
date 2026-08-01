@@ -12,6 +12,13 @@ const beigeTissue = beigeTissueAsset.url;
 const pistaGreen = pistaGreenAsset.url;
 const oliveChikan = oliveChikanAsset.url;
 
+import t130 from "@/assets/trend-WA0130.jpg.asset.json";
+import t95 from "@/assets/trend-WA0095.jpg.asset.json";
+import t113 from "@/assets/trend-WA0113.jpg.asset.json";
+import t114 from "@/assets/trend-WA0114.jpg.asset.json";
+import t104 from "@/assets/trend-WA0104.jpg.asset.json";
+import t98 from "@/assets/trend-WA0098.jpg.asset.json";
+
 export type Product = {
   slug: string;
   name: string;
@@ -44,6 +51,126 @@ export const categories = [
 ];
 
 export const products: Product[] = [
+  {
+    slug: "trending-green-chikankari-kurti-set",
+    name: "Green Chikankari Kurti & Pant Set",
+    price: 350,
+    mrp: 799,
+    category: "Kurtis",
+    group: "Indian Wear",
+    images: [t130.url, detail],
+    colors: [
+      { name: "Bottle Green", hex: "#2f5d4a" },
+      { name: "Beige", hex: "#d7c3a5" },
+    ],
+    sizes,
+    fabric: "Cotton blend kurti with white chikankari embroidery and matching trousers.",
+    description:
+      "Bottle green short kurti with fine white chikankari on the yoke, paired with beige straight pants — easy everyday festive dressing.",
+    rating: 4.7,
+    reviews: 62,
+    tags: ["trending"],
+  },
+  {
+    slug: "trending-red-floral-midi-dress",
+    name: "Red Floral Ruffle Midi Dress",
+    price: 350,
+    mrp: 799,
+    category: "Dresses",
+    group: "Western Wear",
+    images: [t95.url, detail],
+    colors: [
+      { name: "Red", hex: "#c8323c" },
+      { name: "Ivory", hex: "#f4ece0" },
+    ],
+    sizes,
+    fabric: "Soft crepe with all-over ditsy floral print and ruffled hem.",
+    description:
+      "Sweetheart neckline, puff sleeves and a ruffled flared hem in a red ditsy floral print — a instant-favourite summer dress.",
+    rating: 4.7,
+    reviews: 62,
+    tags: ["trending"],
+  },
+  {
+    slug: "trending-wine-jacquard-midi-dress",
+    name: "Wine Jacquard Wrap Midi Dress",
+    price: 350,
+    mrp: 799,
+    category: "Dresses",
+    group: "Western Wear",
+    images: [t113.url, detail],
+    colors: [
+      { name: "Wine", hex: "#6d1734" },
+      { name: "Noir", hex: "#111111" },
+    ],
+    sizes,
+    fabric: "Textured floral jacquard with sheer bishop sleeves.",
+    description:
+      "Deep wine wrap-front midi with tonal floral jacquard and sheer full sleeves — quietly dramatic for evenings.",
+    rating: 4.7,
+    reviews: 62,
+    tags: ["trending"],
+  },
+  {
+    slug: "trending-abstract-print-mini-dress",
+    name: "Abstract Print Tiered Mini Dress",
+    price: 350,
+    mrp: 799,
+    category: "Dresses",
+    group: "Western Wear",
+    images: [t114.url, detail],
+    colors: [
+      { name: "Multi", hex: "#e2732b" },
+      { name: "Ivory", hex: "#f6f1e7" },
+    ],
+    sizes,
+    fabric: "Fluid rayon with multicolour abstract print.",
+    description:
+      "Strappy tiered mini dress in a bright multicolour abstract print — light, breezy and made for brunch days.",
+    rating: 4.7,
+    reviews: 62,
+    tags: ["trending"],
+  },
+  {
+    slug: "trending-mustard-maxi-dress",
+    name: "Mustard Wrap Maxi Dress",
+    price: 350,
+    mrp: 799,
+    category: "Dresses",
+    group: "Western Wear",
+    images: [t104.url, detail],
+    colors: [
+      { name: "Mustard", hex: "#d4b407" },
+      { name: "Champagne", hex: "#dcc49a" },
+    ],
+    sizes,
+    fabric: "Flowy crepe with pleated wrap bodice and front slit.",
+    description:
+      "Mustard maxi with a surplice pleated bodice, cinched waist and a soft front slit — an effortless statement piece.",
+    rating: 4.7,
+    reviews: 62,
+    tags: ["trending"],
+  },
+  {
+    slug: "trending-fuchsia-maxi-dress",
+    name: "Fuchsia Pleated Maxi Dress",
+    price: 350,
+    mrp: 799,
+    category: "Dresses",
+    group: "Western Wear",
+    images: [t98.url, detail],
+    colors: [
+      { name: "Fuchsia", hex: "#c9166f" },
+      { name: "Rose", hex: "#e8a2c2" },
+    ],
+    sizes,
+    fabric: "Georgette with pleated skirt and V-neck strappy bodice.",
+    description:
+      "Fuchsia pink maxi with a wrap V-neck and full pleated skirt — the easiest way to look dressed up.",
+    rating: 4.7,
+    reviews: 62,
+    tags: ["trending"],
+  },
   {
     slug: "woman-3pcs-set-beige-tissue",
     name: "Woman 3Pcs Set — Beige Tissue Silk",

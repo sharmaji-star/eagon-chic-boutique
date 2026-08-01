@@ -284,7 +284,7 @@ function ProductPage() {
             </button>
             <button
               type="button"
-              onClick={add}
+              onClick={() => window.open("https://wa.me/917983642540", "_blank")}
               className="border border-foreground py-4 text-xs font-semibold uppercase tracking-[0.22em] transition-colors hover:bg-secondary"
             >
               Buy now

@@ -19,6 +19,11 @@ import t114 from "@/assets/trend-WA0114.jpg.asset.json";
 import t104 from "@/assets/trend-WA0104.jpg.asset.json";
 import t98 from "@/assets/trend-WA0098.jpg.asset.json";
 
+import k35 from "@/assets/kurti-WA0035.jpg.asset.json";
+import k17 from "@/assets/kurti-WA0017.jpg.asset.json";
+import k19 from "@/assets/kurti-WA0019.jpg.asset.json";
+import k14 from "@/assets/kurti-WA0014.jpg.asset.json";
+
 export type Product = {
   slug: string;
   name: string;
@@ -51,6 +56,86 @@ export const categories = [
 ];
 
 export const products: Product[] = [
+  {
+    slug: "kurti-pink-floral-applique-set",
+    name: "Pink Floral Applique Kurti Set",
+    price: 300,
+    mrp: 699,
+    category: "Kurtis",
+    group: "Indian Wear",
+    images: [k35.url, detail],
+    colors: [
+      { name: "Blush Pink", hex: "#f4a7b0" },
+      { name: "Sky", hex: "#a9cfe3" },
+    ],
+    sizes,
+    fabric: "Soft chanderi-cotton with floral applique work and printed dupatta.",
+    description:
+      "Blush pink kurti with colourful floral applique and bead detailing on the neckline, finished with a matching printed dupatta.",
+    rating: 4.6,
+    reviews: 41,
+    tags: [],
+  },
+  {
+    slug: "kurti-indigo-ajrakh-print-set",
+    name: "Indigo Ajrakh Print Kurti Set",
+    price: 300,
+    mrp: 699,
+    category: "Kurtis",
+    group: "Indian Wear",
+    images: [k17.url, detail],
+    colors: [
+      { name: "Indigo", hex: "#294a6b" },
+      { name: "Maroon", hex: "#7d2b2b" },
+    ],
+    sizes,
+    fabric: "Cotton with ajrakh-style print, sequin highlights and printed dupatta.",
+    description:
+      "Deep indigo kurti in a traditional ajrakh-inspired print with fine sequin work down the placket and a coordinating dupatta.",
+    rating: 4.7,
+    reviews: 53,
+    tags: [],
+  },
+  {
+    slug: "kurti-mustard-cotton-fab-set",
+    name: "Mustard Floral Cotton Kurti Set",
+    price: 300,
+    mrp: 699,
+    category: "Kurtis",
+    group: "Indian Wear",
+    images: [k19.url, detail],
+    colors: [
+      { name: "Mustard", hex: "#9a5f13" },
+      { name: "Cream", hex: "#f0e3c8" },
+    ],
+    sizes,
+    fabric: "Pure cotton straight kurti with pants and printed cotton dupatta.",
+    description:
+      "Mustard three-piece in breathable cotton with an all-over ivory floral print and embroidered placket — easy daily ethnic wear.",
+    rating: 4.6,
+    reviews: 38,
+    tags: [],
+  },
+  {
+    slug: "kurti-rani-pink-buti-print-set",
+    name: "Rani Pink Buti Print Kurti Set",
+    price: 300,
+    mrp: 699,
+    category: "Kurtis",
+    group: "Indian Wear",
+    images: [k14.url, detail],
+    colors: [
+      { name: "Rani Pink", hex: "#c2185b" },
+      { name: "Ivory", hex: "#f4ece0" },
+    ],
+    sizes,
+    fabric: "Cotton with gold-tone buti print, embroidered yoke and printed dupatta.",
+    description:
+      "Rani pink kurti with gold buti print, a hand-embroidered yoke, straight printed pants and a soft cotton dupatta.",
+    rating: 4.7,
+    reviews: 47,
+    tags: [],
+  },
   {
     slug: "trending-green-chikankari-kurti-set",
     name: "Green Chikankari Kurti & Pant Set",

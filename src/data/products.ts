@@ -85,6 +85,7 @@ images: [k35.url, detail],
     mrp: 699,
     category: "Kurtis",
     group: "Indian Wear",
+    gender: "Women",
     images: [k17.url, detail],
     colors: [
       { name: "Indigo", hex: "#294a6b" },
@@ -105,6 +106,7 @@ images: [k35.url, detail],
     mrp: 699,
     category: "Kurtis",
     group: "Indian Wear",
+    gender: "Women"
     images: [k19.url, detail],
     colors: [
       { name: "Mustard", hex: "#9a5f13" },
@@ -125,6 +127,7 @@ images: [k35.url, detail],
     mrp: 699,
     category: "Kurtis",
     group: "Indian Wear",
+    gender: "Women"
     images: [k14.url, detail],
     colors: [
       { name: "Rani Pink", hex: "#c2185b" },
@@ -145,6 +148,7 @@ images: [k35.url, detail],
     mrp: 799,
     category: "Kurtis",
     group: "Indian Wear",
+    gender: "Women"
     images: [t130.url, detail],
     colors: [
       { name: "Bottle Green", hex: "#2f5d4a" },
@@ -165,6 +169,7 @@ images: [k35.url, detail],
     mrp: 799,
     category: "Dresses",
     group: "Western Wear",
+    gender: "Women"
     images: [t95.url, detail],
     colors: [
       { name: "Red", hex: "#c8323c" },
@@ -185,6 +190,7 @@ images: [k35.url, detail],
     mrp: 799,
     category: "Dresses",
     group: "Western Wear",
+    gender: "Women"
     images: [t113.url, detail],
     colors: [
       { name: "Wine", hex: "#6d1734" },
@@ -205,6 +211,7 @@ images: [k35.url, detail],
     mrp: 799,
     category: "Dresses",
     group: "Western Wear",
+    gender: "Women"
     images: [t114.url, detail],
     colors: [
       { name: "Multi", hex: "#e2732b" },
@@ -225,6 +232,7 @@ images: [k35.url, detail],
     mrp: 799,
     category: "Dresses",
     group: "Western Wear",
+    gender: "Women
     images: [t104.url, detail],
     colors: [
       { name: "Mustard", hex: "#d4b407" },
@@ -245,6 +253,7 @@ images: [k35.url, detail],
     mrp: 799,
     category: "Dresses",
     group: "Western Wear",
+    gender: "Women
     images: [t98.url, detail],
     colors: [
       { name: "Fuchsia", hex: "#c9166f" },
@@ -264,6 +273,7 @@ images: [k35.url, detail],
     price: 2199,
     mrp: 3999,
     category: "Co-ord Sets",
+    gender: "Women
     group: "Indian Wear",
     images: [beigeTissue, premiumCoord, detail],
     colors: [
@@ -305,6 +315,7 @@ images: [k35.url, detail],
     mrp: 3199,
     category: "Co-ord Sets",
     group: "Indian Wear",
+    gender: "Women
     images: [oliveChikan, pistaGreen, detail],
     colors: [
       { name: "Olive", hex: "#4a4f43" },
@@ -325,6 +336,7 @@ images: [k35.url, detail],
     mrp: 2499,
     category: "Dresses",
     group: "Western Wear",
+    gender: "Women
     images: [western, tops, detail],
     colors: [
       { name: "Noir", hex: "#111111" },
@@ -345,6 +357,7 @@ images: [k35.url, detail],
   mrp: 3199,
     category: "Co-ord Sets",
 group: "Indian Wear",
+    gender: "Women
 images: [premiumCoord, detail, coord],
   
     colors: [
@@ -366,6 +379,7 @@ images: [premiumCoord, detail, coord],
     mrp: 2799,
     category: "Co-ord Sets",
     group: "Western Wear",
+    gender: "Women
     images: [coord, detail, western],
     colors: [
       { name: "Cream", hex: "#f0e6d6" },
@@ -386,6 +400,7 @@ images: [premiumCoord, detail, coord],
     mrp: 3499,
     category: "Plazo Sets",
     group: "Indian Wear",
+    gender: "Women
     images: [tops, western, detail],
     colors: [
       { name: "Onyx", hex: "#0d0d0d" },
@@ -406,6 +421,7 @@ images: [premiumCoord, detail, coord],
     mrp: 1599,
     category: "Tops",
     group: "Western Wear",
+    gender: "Women
     images: [detail, coord, indian],
     colors: [
       { name: "Sand", hex: "#dcc9ac" },

@@ -62,7 +62,7 @@ export const products: Product[] = [
       "A three-piece tissue silk set with delicate floral hand embroidery on the yoke, straight pants and a self-toned dupatta — festive dressing with a soft metallic sheen.",
     rating: 4.9,
     reviews: 87,
-    tags: ["new", "trending"],
+    tags: ["bestseller"],
   },
   {
     slug: "woman-3pcs-set-pista-green",
@@ -82,7 +82,7 @@ export const products: Product[] = [
       "Straight-cut embroidered kurta with scalloped thread work, paired with palazzo pants and a dupatta. Breathable and easy for long days.",
     rating: 4.7,
     reviews: 124,
-    tags: ["new", "bestseller"],
+    tags: ["bestseller"],
   },
   {
     slug: "woman-3pcs-set-olive-chikankari",
@@ -102,7 +102,7 @@ export const products: Product[] = [
       "Deep olive kurta with dense tonal chikankari across the yoke, finished with matching bottoms and dupatta for a quietly luxe three-piece.",
     rating: 4.8,
     reviews: 96,
-    tags: ["new", "trending"],
+    tags: ["bestseller"],
   },
   {
     slug: "noir-column-midi-dress",

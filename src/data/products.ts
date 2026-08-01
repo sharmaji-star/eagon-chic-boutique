@@ -31,6 +31,7 @@ export type Product = {
   mrp: number;
   category: string;
   group: "Western Wear" | "Indian Wear";
+  gender: "Men" | "Women" | "Kids";
   images: string[];
   colors: { name: string; hex: string }[];
   sizes: string[];

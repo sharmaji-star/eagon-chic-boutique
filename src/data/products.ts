@@ -62,6 +62,9 @@ export const products: Product[] = [
   name: "Premium Co-ord Set",
   price: 1699,
   mrp: 3199,
+    category: "Co-ord Sets",
+group: "Indian Wear",
+images: [premiumCoord, detail, coord],
     group: "Indian Wear",
     images: [premiumCoord, detail, coord],
     colors: [

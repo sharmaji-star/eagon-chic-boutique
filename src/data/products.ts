@@ -4,6 +4,13 @@ import coord from "@/assets/cat-coord.jpg";
 import tops from "@/assets/cat-tops.jpg";
 import premiumCoord from "@/assets/premium-coord.jpg";
 import detail from "@/assets/detail-1.jpg";
+import beigeTissueAsset from "@/assets/set-beige-tissue.jpg.asset.json";
+import pistaGreenAsset from "@/assets/set-pista-green.jpg.asset.json";
+import oliveChikanAsset from "@/assets/set-olive-chikankari.jpg.asset.json";
+
+const beigeTissue = beigeTissueAsset.url;
+const pistaGreen = pistaGreenAsset.url;
+const oliveChikan = oliveChikanAsset.url;
 
 export type Product = {
   slug: string;

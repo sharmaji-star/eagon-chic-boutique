@@ -82,7 +82,7 @@ export const products: Product[] = [
       "Straight-cut embroidered kurta with scalloped thread work, paired with palazzo pants and a dupatta. Breathable and easy for long days.",
     rating: 4.7,
     reviews: 124,
-    tags: ["new", "bestseller"],
+    tags: ["bestseller"],
   },
   {
     slug: "woman-3pcs-set-olive-chikankari",

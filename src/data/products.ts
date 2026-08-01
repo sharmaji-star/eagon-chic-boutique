@@ -19,6 +19,11 @@ import t114 from "@/assets/trend-WA0114.jpg.asset.json";
 import t104 from "@/assets/trend-WA0104.jpg.asset.json";
 import t98 from "@/assets/trend-WA0098.jpg.asset.json";
 
+import k35 from "@/assets/kurti-WA0035.jpg.asset.json";
+import k17 from "@/assets/kurti-WA0017.jpg.asset.json";
+import k19 from "@/assets/kurti-WA0019.jpg.asset.json";
+import k14 from "@/assets/kurti-WA0014.jpg.asset.json";
+
 export type Product = {
   slug: string;
   name: string;

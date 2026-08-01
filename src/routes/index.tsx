@@ -51,7 +51,7 @@ function Home() {
     <main>
       <section className="relative">
         <img
-          src={heroAsset}
+          src={heroAssetPointer.url}
           alt="Model wearing a purple floral printed tunic with teal tapered trousers"
           width={886}
           height={1181}

@@ -2,7 +2,7 @@ import western from "@/assets/cat-western.jpg";
 import indian from "@/assets/cat-indian.jpg";
 import coord from "@/assets/cat-coord.jpg";
 import tops from "@/assets/cat-tops.jpg";
-import premiumCoord from "@/assets/IMG-20260719-WA0171.jpg";
+import premiumCoord from "@/assets/premium-coord.jpg";
 import detail from "@/assets/detail-1.jpg";
 
 export type Product = {

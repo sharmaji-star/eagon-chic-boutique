@@ -4,6 +4,13 @@ import coord from "@/assets/cat-coord.jpg";
 import tops from "@/assets/cat-tops.jpg";
 import premiumCoord from "@/assets/premium-coord.jpg";
 import detail from "@/assets/detail-1.jpg";
+import beigeTissueAsset from "@/assets/set-beige-tissue.jpg.asset.json";
+import pistaGreenAsset from "@/assets/set-pista-green.jpg.asset.json";
+import oliveChikanAsset from "@/assets/set-olive-chikankari.jpg.asset.json";
+
+const beigeTissue = beigeTissueAsset.url;
+const pistaGreen = pistaGreenAsset.url;
+const oliveChikan = oliveChikanAsset.url;
 
 export type Product = {
   slug: string;
@@ -37,6 +44,66 @@ export const categories = [
 ];
 
 export const products: Product[] = [
+  {
+    slug: "woman-3pcs-set-beige-tissue",
+    name: "Woman 3Pcs Set — Beige Tissue Silk",
+    price: 2199,
+    mrp: 3999,
+    category: "Co-ord Sets",
+    group: "Indian Wear",
+    images: [beigeTissue, premiumCoord, detail],
+    colors: [
+      { name: "Beige Gold", hex: "#c9a882" },
+      { name: "Ivory", hex: "#f3e9d9" },
+    ],
+    sizes,
+    fabric: "Tissue silk kurta with hand embroidery, matching pants and dupatta.",
+    description:
+      "A three-piece tissue silk set with delicate floral hand embroidery on the yoke, straight pants and a self-toned dupatta — festive dressing with a soft metallic sheen.",
+    rating: 4.9,
+    reviews: 87,
+    tags: ["new", "trending"],
+  },
+  {
+    slug: "woman-3pcs-set-pista-green",
+    name: "Woman 3Pcs Set — Pista Green Embroidered",
+    price: 1699,
+    mrp: 2999,
+    category: "Co-ord Sets",
+    group: "Indian Wear",
+    images: [pistaGreen, oliveChikan, detail],
+    colors: [
+      { name: "Pista Green", hex: "#a8d08d" },
+      { name: "Olive", hex: "#4a4f43" },
+    ],
+    sizes,
+    fabric: "Soft rayon-cotton with thread embroidery and lace detailing.",
+    description:
+      "Straight-cut embroidered kurta with scalloped thread work, paired with palazzo pants and a dupatta. Breathable and easy for long days.",
+    rating: 4.7,
+    reviews: 124,
+    tags: ["new", "bestseller"],
+  },
+  {
+    slug: "woman-3pcs-set-olive-chikankari",
+    name: "Woman 3Pcs Set — Olive Chikankari",
+    price: 1799,
+    mrp: 3199,
+    category: "Co-ord Sets",
+    group: "Indian Wear",
+    images: [oliveChikan, pistaGreen, detail],
+    colors: [
+      { name: "Olive", hex: "#4a4f43" },
+      { name: "Pista Green", hex: "#a8d08d" },
+    ],
+    sizes,
+    fabric: "Viscose crepe with tonal chikankari embroidery.",
+    description:
+      "Deep olive kurta with dense tonal chikankari across the yoke, finished with matching bottoms and dupatta for a quietly luxe three-piece.",
+    rating: 4.8,
+    reviews: 96,
+    tags: ["new", "trending"],
+  },
   {
     slug: "noir-column-midi-dress",
     name: "Noir Column Midi Dress",

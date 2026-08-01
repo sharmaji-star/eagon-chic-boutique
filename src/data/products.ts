@@ -65,8 +65,7 @@ export const products: Product[] = [
     category: "Co-ord Sets",
 group: "Indian Wear",
 images: [premiumCoord, detail, coord],
-    group: "Indian Wear",
-    images: [premiumCoord, detail, coord],
+  
     colors: [
       { name: "Teal Blue", hex: "#1e4a5f" },
       { name: "Ivory", hex: "#f3e9d9" },

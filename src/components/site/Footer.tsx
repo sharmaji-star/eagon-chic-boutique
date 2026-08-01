@@ -42,8 +42,9 @@ export function Footer() {
         <div>
           <p className="eyebrow">Contact</p>
           <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-            <li className="flex items-center gap-2"><MessageCircle className="size-4" /> +91 90000 00000</li>
-            <li className="flex items-center gap-2"><Headphones className="size-4" /> care@eagonshop.com</li>
+            <li>📞 7983642540</li>
+            <li>📧 gauav4680@gmail.com</li>
+            <li><a href="https://chat.whatsapp.com/GL6LLv14p1A86g9HGaSrm9">💬 Join WhatsApp Community</a></li>
             <li>Mon–Sat, 10am–7pm IST</li>
           </ul>
         </div>

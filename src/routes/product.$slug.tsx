@@ -85,8 +85,9 @@ export const Route = createFileRoute("/product/$slug")({
 
 function ProductPage() {
   const { slug } = Route.useParams();
+  const navigate = useNavigate();
   const product = findProduct(slug)!;
-  const { addToCart, wishlist, toggleWishlist, addRecent, recent } = useShop();
+  const { addToCart, wishlist, toggleWishlist, addRecent, recent, wholesaleMode } = useShop();
   const [active, setActive] = useState(0);
   const [size, setSize] = useState(product.sizes[1] ?? product.sizes[0]);
   const [color, setColor] = useState(product.colors[0].name);
@@ -108,16 +109,41 @@ function ProductPage() {
   const bundle = product.price + fbt.reduce((n, p) => n + p.price, 0);
   const recentList = recent.map(findProduct).filter(Boolean).slice(0, 4);
 
-  const add = () =>
+  const stock = stockFor(product);
+  const delivery = deliveryEstimate();
+  const tiers = wholesaleTiers(product.price);
+  const bulk = wholesaleMode || qty >= MOQ;
+  const unitPrice = bulk ? wholesaleUnitPrice(product.price, qty) : product.price;
+  const savings = bulk ? bulkSavings(product.price, qty) : 0;
+  const enquiryText = encodeURIComponent(
+    `Hi Eagon Shop, I'd like a wholesale quotation for "${product.name}" (${size}, ${color}) — quantity ${Math.max(qty, MOQ)} pieces.`,
+  );
+  const quoteSubject = encodeURIComponent(`Quotation request — ${product.name}`);
+
+  const add = (quantity = qty, wholesale = bulk) =>
     addToCart({
       slug: product.slug,
       name: product.name,
-      price: product.price,
+      price: wholesale ? wholesaleUnitPrice(product.price, quantity) : product.price,
       image: product.images[0],
       size,
       color,
-      qty,
+      qty: quantity,
+      wholesale,
     });
+
+  const buyNow = () => {
+    add();
+    navigate({ to: "/checkout" });
+  };
+
+  const buyBulk = () => {
+    const quantity = Math.max(qty, MOQ);
+    setQty(quantity);
+    add(quantity, true);
+    navigate({ to: "/checkout" });
+  };
+
 
   return (
     <main className="mx-auto max-w-7xl px-6 py-10 pb-28 lg:pb-10">

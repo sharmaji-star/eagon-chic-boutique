@@ -275,7 +275,6 @@ images: [k35.url, detail],
     category: "Co-ord Sets",
     gender: "Women",
     group: "Indian Wear",
-    gender: "Women",
     images: [beigeTissue, premiumCoord, detail],
     colors: [
       { name: "Beige Gold", hex: "#c9a882" },

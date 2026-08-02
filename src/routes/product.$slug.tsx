@@ -272,6 +272,49 @@ function ProductPage() {
             >
               <Heart className={`size-4 ${wished ? "fill-current text-gold" : ""}`} />
             </button>
+            <p className={`text-xs ${stock > 15 ? "text-muted-foreground" : "text-gold"}`}>
+              {stock > 15 ? "In stock" : `Only ${stock} left`}
+            </p>
+          </div>
+
+          <div className="glass mt-6 p-5">
+            <div className="flex items-center justify-between">
+              <p className="eyebrow flex items-center gap-2">
+                <Layers className="size-3.5 text-gold" /> Wholesale rate card
+              </p>
+              <span className="text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground">
+                MOQ {MOQ} pcs
+              </span>
+            </div>
+            <ul className="mt-3 space-y-1.5 text-xs">
+              <li className="flex justify-between">
+                <span className="text-muted-foreground">Retail · 1 piece</span>
+                <span>{inr(product.price)}</span>
+              </li>
+              {tiers.map((t) => (
+                <li
+                  key={t.minQty}
+                  className={`flex justify-between ${
+                    qty >= t.minQty && t.price !== null ? "text-gold" : "text-muted-foreground"
+                  }`}
+                >
+                  <span>{t.minQty}+ pieces</span>
+                  <span>{t.price === null ? "Contact us" : `${inr(t.price)} each`}</span>
+                </li>
+              ))}
+            </ul>
+            {qty >= MOQ && (
+              <p className="mt-3 text-xs">
+                Your price for {qty} pcs:{" "}
+                <span className="font-semibold">{inr(unitPrice)} each</span> · total {inr(unitPrice * qty)}
+                {savings > 0 && <span className="text-gold"> (save {inr(savings)})</span>}
+              </p>
+            )}
+            {!wholesaleMode && (
+              <Link to="/wholesale" className="link-underline mt-3 inline-block text-xs">
+                Register as a wholesaler to unlock these rates
+              </Link>
+            )}
           </div>
 
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -284,18 +327,40 @@ function ProductPage() {
             </button>
             <button
               type="button"
-              onClick={() => window.open("https://wa.me/917983642540", "_blank")}
+              onClick={buyNow}
               className="border border-foreground py-4 text-xs font-semibold uppercase tracking-[0.22em] transition-colors hover:bg-secondary"
             >
               Buy now
             </button>
+            <button
+              type="button"
+              onClick={buyBulk}
+              className="border border-border py-4 text-xs font-semibold uppercase tracking-[0.22em] transition-colors hover:bg-secondary"
+            >
+              Buy in bulk ({MOQ}+ pcs)
+            </button>
+            <a
+              href={`${CONTACT.whatsappChat}?text=${enquiryText}`}
+              target="_blank"
+              rel="noreferrer"
+              className="border border-border py-4 text-center text-xs font-semibold uppercase tracking-[0.22em] transition-colors hover:bg-secondary"
+            >
+              Wholesale enquiry
+            </a>
+            <a
+              href={`mailto:${CONTACT.email}?subject=${quoteSubject}&body=${enquiryText}`}
+              className="border border-border py-4 text-center text-xs font-semibold uppercase tracking-[0.22em] transition-colors hover:bg-secondary sm:col-span-2"
+            >
+              Request quotation
+            </a>
           </div>
 
           <div className="mt-6 grid gap-2 text-xs text-muted-foreground">
-            <p className="flex items-center gap-2"><Truck className="size-3.5 text-gold" /> Free shipping above ₹999 · dispatched in 24h</p>
-            <p className="flex items-center gap-2"><RotateCcw className="size-3.5 text-gold" /> Easy 7-day returns &amp; exchange</p>
-            <p className="flex items-center gap-2"><ShieldCheck className="size-3.5 text-gold" /> UPI · Cards · Net banking · Wallets · COD</p>
+            <p className="flex items-center gap-2"><Truck className="size-3.5 text-gold" /> Delivery estimate: {delivery} · dispatched in 24h · free above ₹999</p>
+            <p className="flex items-center gap-2"><RotateCcw className="size-3.5 text-gold" /> Easy 7-day returns &amp; exchange — unworn, tags intact</p>
+            <p className="flex items-center gap-2"><ShieldCheck className="size-3.5 text-gold" /> Razorpay · UPI · Cards · Net banking · Wallets · COD</p>
           </div>
+
 
           <div className="mt-8 space-y-4 border-t border-border pt-6 text-sm">
             <div>

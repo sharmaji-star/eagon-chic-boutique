@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { MessageCircle, X, Send } from "lucide-react";
+import { MessageCircle, X, Send, Phone } from "lucide-react";
+import { CONTACT } from "@/data/catalog";
 
 export function FloatingActions() {
   const [chat, setChat] = useState(false);
@@ -15,20 +16,31 @@ export function FloatingActions() {
             </button>
           </div>
           <p className="mt-3 text-xs text-muted-foreground">
-            Hi! Ask us about sizing, fabric or delivery — a stylist replies within minutes.
+            Hi! Ask us about sizing, fabric, wholesale rates or delivery — we reply within minutes.
           </p>
-          <div className="mt-3 flex items-center gap-2 border-t border-border pt-3">
-            <input
-              placeholder="Type a message…"
-              className="min-w-0 flex-1 bg-transparent text-sm outline-none"
-            />
-            <Send className="size-4 text-gold" />
+          <div className="mt-3 grid gap-2 text-xs">
+            <a href={`tel:+91${CONTACT.phone}`} className="flex items-center gap-2">
+              <Phone className="size-3.5 text-gold" /> {CONTACT.phone}
+            </a>
+            <a href={`mailto:${CONTACT.email}`} className="flex items-center gap-2">
+              <Send className="size-3.5 text-gold" /> {CONTACT.email}
+            </a>
+            <a
+              href={CONTACT.whatsappGroup}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2"
+            >
+              <MessageCircle className="size-3.5 text-gold" /> Join wholesale WhatsApp group
+            </a>
           </div>
         </div>
       )}
 
       <a
-        href="https://wa.me/919000000000"
+        href={CONTACT.whatsappChat}
+        target="_blank"
+        rel="noreferrer"
         aria-label="Chat on WhatsApp"
         className="grid size-12 place-items-center rounded-full bg-primary text-primary-foreground shadow-soft transition-transform duration-300 hover:scale-105"
       >
@@ -37,11 +49,11 @@ export function FloatingActions() {
 
       <button
         type="button"
-        aria-label="Open live chat"
+        aria-label="Open contact card"
         onClick={() => setChat((c) => !c)}
         className="glass rounded-full px-4 py-2 text-xs uppercase tracking-[0.2em]"
       >
-        Live chat
+        Contact
       </button>
     </div>
   );

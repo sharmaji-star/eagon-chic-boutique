@@ -1,9 +1,18 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Heart, Star, Truck, RotateCcw, ShieldCheck, Ruler, Plus, Minus } from "lucide-react";
+import { Heart, Star, Truck, RotateCcw, ShieldCheck, Ruler, Plus, Minus, Layers } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
 import { ProductCard } from "@/components/site/ProductCard";
 import { findProduct, inr, products, reviewsList } from "@/data/products";
+import {
+  CONTACT,
+  MOQ,
+  bulkSavings,
+  deliveryEstimate,
+  stockFor,
+  wholesaleTiers,
+  wholesaleUnitPrice,
+} from "@/data/catalog";
 import { useShop } from "@/context/shop";
 
 export const Route = createFileRoute("/product/$slug")({
@@ -76,8 +85,9 @@ export const Route = createFileRoute("/product/$slug")({
 
 function ProductPage() {
   const { slug } = Route.useParams();
+  const navigate = useNavigate();
   const product = findProduct(slug)!;
-  const { addToCart, wishlist, toggleWishlist, addRecent, recent } = useShop();
+  const { addToCart, wishlist, toggleWishlist, addRecent, recent, wholesaleMode } = useShop();
   const [active, setActive] = useState(0);
   const [size, setSize] = useState(product.sizes[1] ?? product.sizes[0]);
   const [color, setColor] = useState(product.colors[0].name);
@@ -99,16 +109,41 @@ function ProductPage() {
   const bundle = product.price + fbt.reduce((n, p) => n + p.price, 0);
   const recentList = recent.map(findProduct).filter(Boolean).slice(0, 4);
 
-  const add = () =>
+  const stock = stockFor(product);
+  const delivery = deliveryEstimate();
+  const tiers = wholesaleTiers(product.price);
+  const bulk = wholesaleMode || qty >= MOQ;
+  const unitPrice = bulk ? wholesaleUnitPrice(product.price, qty) : product.price;
+  const savings = bulk ? bulkSavings(product.price, qty) : 0;
+  const enquiryText = encodeURIComponent(
+    `Hi Eagon Shop, I'd like a wholesale quotation for "${product.name}" (${size}, ${color}) — quantity ${Math.max(qty, MOQ)} pieces.`,
+  );
+  const quoteSubject = encodeURIComponent(`Quotation request — ${product.name}`);
+
+  const add = (quantity = qty, wholesale = bulk) =>
     addToCart({
       slug: product.slug,
       name: product.name,
-      price: product.price,
+      price: wholesale ? wholesaleUnitPrice(product.price, quantity) : product.price,
       image: product.images[0],
       size,
       color,
-      qty,
+      qty: quantity,
+      wholesale,
     });
+
+  const buyNow = () => {
+    add();
+    navigate({ to: "/checkout" });
+  };
+
+  const buyBulk = () => {
+    const quantity = Math.max(qty, MOQ);
+    setQty(quantity);
+    add(quantity, true);
+    navigate({ to: "/checkout" });
+  };
+
 
   return (
     <main className="mx-auto max-w-7xl px-6 py-10 pb-28 lg:pb-10">
@@ -272,30 +307,95 @@ function ProductPage() {
             >
               <Heart className={`size-4 ${wished ? "fill-current text-gold" : ""}`} />
             </button>
+            <p className={`text-xs ${stock > 15 ? "text-muted-foreground" : "text-gold"}`}>
+              {stock > 15 ? "In stock" : `Only ${stock} left`}
+            </p>
+          </div>
+
+          <div className="glass mt-6 p-5">
+            <div className="flex items-center justify-between">
+              <p className="eyebrow flex items-center gap-2">
+                <Layers className="size-3.5 text-gold" /> Wholesale rate card
+              </p>
+              <span className="text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground">
+                MOQ {MOQ} pcs
+              </span>
+            </div>
+            <ul className="mt-3 space-y-1.5 text-xs">
+              <li className="flex justify-between">
+                <span className="text-muted-foreground">Retail · 1 piece</span>
+                <span>{inr(product.price)}</span>
+              </li>
+              {tiers.map((t) => (
+                <li
+                  key={t.minQty}
+                  className={`flex justify-between ${
+                    qty >= t.minQty && t.price !== null ? "text-gold" : "text-muted-foreground"
+                  }`}
+                >
+                  <span>{t.minQty}+ pieces</span>
+                  <span>{t.price === null ? "Contact us" : `${inr(t.price)} each`}</span>
+                </li>
+              ))}
+            </ul>
+            {qty >= MOQ && (
+              <p className="mt-3 text-xs">
+                Your price for {qty} pcs:{" "}
+                <span className="font-semibold">{inr(unitPrice)} each</span> · total {inr(unitPrice * qty)}
+                {savings > 0 && <span className="text-gold"> (save {inr(savings)})</span>}
+              </p>
+            )}
+            {!wholesaleMode && (
+              <Link to="/wholesale" className="link-underline mt-3 inline-block text-xs">
+                Register as a wholesaler to unlock these rates
+              </Link>
+            )}
           </div>
 
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
             <button
               type="button"
-              onClick={add}
+              onClick={() => add()}
               className="bg-primary py-4 text-xs font-semibold uppercase tracking-[0.22em] text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
             >
               Add to cart
             </button>
             <button
               type="button"
-              onClick={() => window.open("https://wa.me/917983642540", "_blank")}
+              onClick={buyNow}
               className="border border-foreground py-4 text-xs font-semibold uppercase tracking-[0.22em] transition-colors hover:bg-secondary"
             >
               Buy now
             </button>
+            <button
+              type="button"
+              onClick={buyBulk}
+              className="border border-border py-4 text-xs font-semibold uppercase tracking-[0.22em] transition-colors hover:bg-secondary"
+            >
+              Buy in bulk ({MOQ}+ pcs)
+            </button>
+            <a
+              href={`${CONTACT.whatsappChat}?text=${enquiryText}`}
+              target="_blank"
+              rel="noreferrer"
+              className="border border-border py-4 text-center text-xs font-semibold uppercase tracking-[0.22em] transition-colors hover:bg-secondary"
+            >
+              Wholesale enquiry
+            </a>
+            <a
+              href={`mailto:${CONTACT.email}?subject=${quoteSubject}&body=${enquiryText}`}
+              className="border border-border py-4 text-center text-xs font-semibold uppercase tracking-[0.22em] transition-colors hover:bg-secondary sm:col-span-2"
+            >
+              Request quotation
+            </a>
           </div>
 
           <div className="mt-6 grid gap-2 text-xs text-muted-foreground">
-            <p className="flex items-center gap-2"><Truck className="size-3.5 text-gold" /> Free shipping above ₹999 · dispatched in 24h</p>
-            <p className="flex items-center gap-2"><RotateCcw className="size-3.5 text-gold" /> Easy 7-day returns &amp; exchange</p>
-            <p className="flex items-center gap-2"><ShieldCheck className="size-3.5 text-gold" /> UPI · Cards · Net banking · Wallets · COD</p>
+            <p className="flex items-center gap-2"><Truck className="size-3.5 text-gold" /> Delivery estimate: {delivery} · dispatched in 24h · free above ₹999</p>
+            <p className="flex items-center gap-2"><RotateCcw className="size-3.5 text-gold" /> Easy 7-day returns &amp; exchange — unworn, tags intact</p>
+            <p className="flex items-center gap-2"><ShieldCheck className="size-3.5 text-gold" /> Razorpay · UPI · Cards · Net banking · Wallets · COD</p>
           </div>
+
 
           <div className="mt-8 space-y-4 border-t border-border pt-6 text-sm">
             <div>
@@ -396,7 +496,7 @@ function ProductPage() {
         </div>
         <button
           type="button"
-          onClick={add}
+          onClick={() => add()}
           className="shrink-0 bg-primary px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary-foreground"
         >
           Add to cart

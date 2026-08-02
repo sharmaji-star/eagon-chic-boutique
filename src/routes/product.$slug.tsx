@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Heart, Star, Truck, RotateCcw, ShieldCheck, Ruler, Plus, Minus, Layers } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
@@ -355,7 +355,7 @@ function ProductPage() {
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
             <button
               type="button"
-              onClick={add}
+              onClick={() => add()}
               className="bg-primary py-4 text-xs font-semibold uppercase tracking-[0.22em] text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
             >
               Add to cart
@@ -496,7 +496,7 @@ function ProductPage() {
         </div>
         <button
           type="button"
-          onClick={add}
+          onClick={() => add()}
           className="shrink-0 bg-primary px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary-foreground"
         >
           Add to cart

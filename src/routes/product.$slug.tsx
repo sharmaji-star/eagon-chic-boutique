@@ -1,9 +1,18 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Heart, Star, Truck, RotateCcw, ShieldCheck, Ruler, Plus, Minus } from "lucide-react";
+import { Heart, Star, Truck, RotateCcw, ShieldCheck, Ruler, Plus, Minus, Layers } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
 import { ProductCard } from "@/components/site/ProductCard";
 import { findProduct, inr, products, reviewsList } from "@/data/products";
+import {
+  CONTACT,
+  MOQ,
+  bulkSavings,
+  deliveryEstimate,
+  stockFor,
+  wholesaleTiers,
+  wholesaleUnitPrice,
+} from "@/data/catalog";
 import { useShop } from "@/context/shop";
 
 export const Route = createFileRoute("/product/$slug")({

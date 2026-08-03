@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MessageCircle, X, Send, Phone } from "lucide-react";
+import { MessageCircle, X, Send, Phone, Mail, Users } from "lucide-react";
 import { CONTACT } from "@/data/catalog";
 
 export function FloatingActions() {
@@ -31,7 +31,7 @@ export function FloatingActions() {
               rel="noreferrer"
               className="flex items-center gap-2"
             >
-              <MessageCircle className="size-3.5 text-gold" /> Join wholesale WhatsApp group
+              <Users className="size-3.5 text-gold" /> Join wholesale WhatsApp community
             </a>
           </div>
         </div>
@@ -45,6 +45,22 @@ export function FloatingActions() {
         className="grid size-12 place-items-center rounded-full bg-primary text-primary-foreground shadow-soft transition-transform duration-300 hover:scale-105"
       >
         <MessageCircle className="size-5" />
+      </a>
+
+      <a
+        href={`tel:+91${CONTACT.phone}`}
+        aria-label={`Call ${CONTACT.phone}`}
+        className="glass grid size-12 place-items-center rounded-full shadow-soft transition-transform duration-300 hover:scale-105"
+      >
+        <Phone className="size-5 text-gold" />
+      </a>
+
+      <a
+        href={`mailto:${CONTACT.email}`}
+        aria-label={`Email ${CONTACT.email}`}
+        className="glass grid size-12 place-items-center rounded-full shadow-soft transition-transform duration-300 hover:scale-105"
+      >
+        <Mail className="size-5 text-gold" />
       </a>
 
       <button

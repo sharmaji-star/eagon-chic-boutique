@@ -142,7 +142,7 @@ export function Header() {
               {theme === "dark" ? <Sun className="size-5" /> : <Moon className="size-5" />}
             </button>
 
-            <Link to="/shop" search={{}} aria-label="Wishlist" className="relative hidden sm:block">
+            <Link to="/wishlist" aria-label="Wishlist" className="relative hidden sm:block">
               <Heart className="size-5" />
               {wishlist.length > 0 && (
                 <span className="absolute -right-2 -top-2 grid size-4 place-items-center rounded-full bg-gold text-[0.6rem] text-primary-foreground">

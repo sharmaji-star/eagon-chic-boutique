@@ -33,9 +33,11 @@ export function Footer() {
           <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
             <li>Shipping &amp; Delivery</li>
             <li>7-Day Returns</li>
-            <li>Order Tracking</li>
-            <li>Size Guide</li>
-            <li>Privacy Policy</li>
+            <li><Link to="/orders" className="link-underline">Order Tracking</Link></li>
+            <li><Link to="/wishlist" className="link-underline">My Wishlist</Link></li>
+            <li><Link to="/wholesale" className="link-underline">Wholesale Registration</Link></li>
+            <li><Link to="/admin" className="link-underline">Admin Dashboard</Link></li>
+
           </ul>
         </div>
 

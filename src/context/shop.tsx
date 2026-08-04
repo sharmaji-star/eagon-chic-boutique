@@ -40,6 +40,12 @@ export type Order = {
   };
 };
 
+export type UserAccount = {
+  name: string;
+  email: string;
+  phone: string;
+};
+
 type ShopState = {
   cart: CartLine[];
   saved: CartLine[];
@@ -48,6 +54,9 @@ type ShopState = {
   orders: Order[];
   wholesale: WholesaleAccount | null;
   wholesaleMode: boolean;
+  user: UserAccount | null;
+  signIn: (user: UserAccount) => void;
+  signOut: () => void;
   addToCart: (line: CartLine) => void;
   removeLine: (index: number) => void;
   setQty: (index: number, qty: number) => void;
@@ -65,6 +74,7 @@ type ShopState = {
   theme: "light" | "dark";
   toggleTheme: () => void;
 };
+
 
 const ShopContext = createContext<ShopState | null>(null);
 
@@ -97,7 +107,9 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   const [recent, setRecent] = useLocal<string[]>("eagon.recent", []);
   const [orders, setOrders] = useLocal<Order[]>("eagon.orders", []);
   const [wholesale, setWholesale] = useLocal<WholesaleAccount | null>("eagon.wholesale", null);
-  const [wholesaleMode, setMode] = useLocal<boolean>("eagon.wholesaleMode", false);
+  // Wholesale-first store: bulk pricing is the default view.
+  const [wholesaleMode, setMode] = useLocal<boolean>("eagon.wholesaleMode", true);
+  const [user, setUser] = useLocal<UserAccount | null>("eagon.user", null);
   const [theme, setTheme] = useLocal<"light" | "dark">("eagon.theme", "light");
 
   useEffect(() => {
@@ -112,9 +124,13 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       recent,
       orders,
       wholesale,
-      wholesaleMode: wholesaleMode && wholesale !== null,
+      wholesaleMode,
+      user,
+      signIn: (account) => setUser(account),
+      signOut: () => setUser(null),
       theme,
       toggleTheme: () => setTheme((t) => (t === "dark" ? "light" : "dark")),
+
       addToCart: (line) =>
         setCart((prev) => {
           const idx = prev.findIndex(
@@ -172,7 +188,10 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       orders,
       wholesale,
       wholesaleMode,
+      user,
+      setUser,
       theme,
+
       setCart,
       setSaved,
       setWishlist,

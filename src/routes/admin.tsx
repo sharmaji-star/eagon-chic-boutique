@@ -112,7 +112,11 @@ function Admin() {
             const o = overrides[p.slug] ?? {};
             const price = o.price ?? p.price;
             const stock = o.stock ?? stockFor(p);
-            const tiers = wholesaleTiers(price);
+            const tiers = wholesaleTiers({
+              wholesalePrice: o.wholesalePrice ?? p.wholesalePrice,
+              moq: o.moq ?? p.moq,
+            });
+
             return (
               <article key={p.slug} className="glass p-5">
                 <div className="grid gap-4 sm:grid-cols-[64px_minmax(0,1fr)]">

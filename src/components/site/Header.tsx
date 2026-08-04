@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   Search,
@@ -14,10 +14,35 @@ import {
   BookmarkPlus,
   ChevronDown,
   Briefcase,
+  User,
 } from "lucide-react";
-import { inr, products } from "@/data/products";
-import { shopMenu, shippingFor } from "@/data/catalog";
+import { inr } from "@/data/products";
+import { shopMenu, shippingFor, DEFAULT_MOQ } from "@/data/catalog";
+import { useProducts } from "@/data/useCatalog";
 import { useShop } from "@/context/shop";
+
+function ModeToggle() {
+  const { wholesaleMode, setWholesaleMode } = useShop();
+  return (
+    <div className="flex items-center rounded-full border border-border p-0.5 text-[0.6rem] uppercase tracking-[0.14em]">
+      {(["Retail", "Wholesale"] as const).map((label) => {
+        const active = (label === "Wholesale") === wholesaleMode;
+        return (
+          <button
+            key={label}
+            type="button"
+            onClick={() => setWholesaleMode(label === "Wholesale")}
+            className={`rounded-full px-2.5 py-1 transition-colors ${
+              active ? "bg-primary text-primary-foreground" : "text-muted-foreground"
+            }`}
+          >
+            {label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
 
 export function Header() {
   const {
@@ -31,14 +56,17 @@ export function Header() {
     toggleTheme,
     wishlist,
     wholesaleMode,
+    user,
   } = useShop();
+  const products = useProducts();
+  const navigate = useNavigate();
   const [menu, setMenu] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const [cartOpen, setCartOpen] = useState(false);
   const [query, setQuery] = useState("");
 
   const results = query.trim()
-    ? products.filter((p) => p.name.toLowerCase().includes(query.trim().toLowerCase())).slice(0, 4)
+    ? products.filter((p) => p.name.toLowerCase().includes(query.trim().toLowerCase())).slice(0, 5)
     : [];
 
   const shipping = shippingFor(subtotal);
@@ -47,9 +75,10 @@ export function Header() {
     <>
       <div className="bg-primary py-2 text-center text-[0.65rem] uppercase tracking-[0.28em] text-primary-foreground">
         {wholesaleMode
-          ? "Wholesale pricing active · MOQ 10 pieces"
+          ? `Wholesale pricing active · MOQ ${DEFAULT_MOQ} pieces`
           : "Free shipping above ₹999 · Easy 7-day returns"}
       </div>
+
 
       <header className="glass sticky top-0 z-50">
         <div className="mx-auto grid max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-3 px-4 py-3 sm:px-6 lg:grid-cols-3">
@@ -110,17 +139,28 @@ export function Header() {
           </Link>
 
           <div className="flex shrink-0 items-center justify-end gap-3 sm:gap-4">
+            <div className="hidden lg:block">
+              <ModeToggle />
+            </div>
+
             <details className="relative hidden sm:block">
               <summary className="list-none cursor-pointer">
                 <Search className="size-5" />
               </summary>
               <div className="glass absolute right-0 top-9 w-72 p-3">
-                <input
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search kurtis, dresses, co-ords…"
-                  className="w-full border-b border-border bg-transparent pb-2 text-sm outline-none"
-                />
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    if (query.trim()) navigate({ to: "/search", search: { q: query.trim() } });
+                  }}
+                >
+                  <input
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search kurtis, dresses, co-ords…"
+                    className="w-full border-b border-border bg-transparent pb-2 text-sm outline-none"
+                  />
+                </form>
                 <ul className="mt-2 space-y-2">
                   {results.map((p) => (
                     <li key={p.slug}>
@@ -135,12 +175,29 @@ export function Header() {
                     </li>
                   ))}
                 </ul>
+                {query.trim() && (
+                  <Link
+                    to="/search"
+                    search={{ q: query.trim() }}
+                    className="link-underline mt-3 inline-block text-xs uppercase tracking-[0.16em]"
+                  >
+                    See all results
+                  </Link>
+                )}
               </div>
             </details>
 
             <button type="button" aria-label="Toggle dark mode" onClick={toggleTheme}>
               {theme === "dark" ? <Sun className="size-5" /> : <Moon className="size-5" />}
             </button>
+
+            <Link
+              to="/account"
+              aria-label={user ? "My account" : "Sign in"}
+              className="relative hidden sm:block"
+            >
+              <User className="size-5" />
+            </Link>
 
             <Link to="/wishlist" aria-label="Wishlist" className="relative hidden sm:block">
               <Heart className="size-5" />
@@ -150,6 +207,7 @@ export function Header() {
                 </span>
               )}
             </Link>
+
 
             <button type="button" aria-label="Cart" onClick={() => setCartOpen(true)} className="relative">
               <ShoppingBag className="size-5" />
@@ -172,7 +230,36 @@ export function Header() {
             </button>
           </div>
 
+          <div className="mt-5 flex items-center justify-between gap-3">
+            <ModeToggle />
+            <Link
+              to="/account"
+              onClick={() => setMenu(false)}
+              className="link-underline text-xs uppercase tracking-[0.16em]"
+            >
+              {user ? user.name.split(" ")[0] : "Sign in"}
+            </Link>
+          </div>
+
+          <form
+            className="mt-4"
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (!query.trim()) return;
+              setMenu(false);
+              navigate({ to: "/search", search: { q: query.trim() } });
+            }}
+          >
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search products…"
+              className="w-full border-b border-border bg-transparent pb-2 text-sm outline-none"
+            />
+          </form>
+
           <nav className="mt-8 space-y-6">
+
             {shopMenu.map((g) => (
               <div key={g.label}>
                 <Link

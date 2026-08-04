@@ -61,7 +61,7 @@ function Wholesale() {
     form.state.trim().length > 1 &&
     form.country.trim().length > 1;
 
-  const sampleTiers = wholesaleTiers(399);
+  const sampleTiers = wholesaleTiers({ wholesalePrice: 399, moq: MOQ });
 
   return (
     <main className="mx-auto max-w-5xl px-6 py-12">

@@ -1,12 +1,15 @@
 import { Link } from "@tanstack/react-router";
-import { Heart, Eye } from "lucide-react";
+import { Heart, Eye, Layers } from "lucide-react";
 import { inr, type Product } from "@/data/products";
 import { useShop } from "@/context/shop";
 
 export function ProductCard({ product }: { product: Product }) {
-  const { wishlist, toggleWishlist, addToCart } = useShop();
+  const { wishlist, toggleWishlist, addToCart, wholesaleMode } = useShop();
   const wished = wishlist.includes(product.slug);
   const off = Math.round(100 - (product.price / product.mrp) * 100);
+  const wholesaleOff = Math.round(100 - (product.wholesalePrice / product.price) * 100);
+  const qty = wholesaleMode ? product.moq : 1;
+  const unit = wholesaleMode ? product.wholesalePrice : product.price;
 
   return (
     <article className="group relative">
@@ -34,10 +37,16 @@ export function ProductCard({ product }: { product: Product }) {
         <Heart className={`size-4 ${wished ? "fill-current text-gold" : ""}`} />
       </button>
 
-      {off > 0 && (
-        <span className="eyebrow absolute left-3 top-3 bg-primary px-2 py-1 text-primary-foreground">
-          {off}% off
+      {wholesaleMode ? (
+        <span className="absolute left-3 top-3 flex items-center gap-1 bg-primary px-2 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.14em] text-primary-foreground">
+          <Layers className="size-3" /> {wholesaleOff}% bulk off
         </span>
+      ) : (
+        off > 0 && (
+          <span className="absolute left-3 top-3 bg-primary px-2 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.14em] text-primary-foreground">
+            {off}% off
+          </span>
+        )
       )}
 
       <div className="pointer-events-none absolute inset-x-3 bottom-3 flex translate-y-3 gap-2 opacity-0 transition-all duration-400 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100">
@@ -47,16 +56,17 @@ export function ProductCard({ product }: { product: Product }) {
             addToCart({
               slug: product.slug,
               name: product.name,
-              price: product.price,
+              price: unit,
               image: product.images[0],
               size: product.sizes[1] ?? product.sizes[0],
               color: product.colors[0].name,
-              qty: 1,
+              qty,
+              wholesale: wholesaleMode,
             })
           }
           className="flex-1 bg-primary py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground transition-opacity hover:opacity-90"
         >
-          Add to cart
+          {wholesaleMode ? `Bulk add · ${product.moq}` : "Add to cart"}
         </button>
         <Link
           to="/product/$slug"
@@ -70,15 +80,28 @@ export function ProductCard({ product }: { product: Product }) {
 
       <div className="mt-4 space-y-1">
         <p className="eyebrow">{product.category}</p>
-        <h3 className="text-sm font-medium">
+        <h3 className="text-sm font-medium text-foreground">
           <Link to="/product/$slug" params={{ slug: product.slug }} className="link-underline">
             {product.name}
           </Link>
         </h3>
-        <p className="flex items-baseline gap-2 text-sm">
-          <span className="font-semibold">{inr(product.price)}</span>
-          <span className="text-xs text-muted-foreground line-through">{inr(product.mrp)}</span>
-        </p>
+        {wholesaleMode ? (
+          <>
+            <p className="flex items-baseline gap-2 text-sm">
+              <span className="font-semibold text-foreground">{inr(product.wholesalePrice)}</span>
+              <span className="text-xs text-muted-foreground">/ pc</span>
+              <span className="text-xs text-muted-foreground line-through">{inr(product.price)}</span>
+            </p>
+            <p className="text-[0.68rem] uppercase tracking-[0.14em] text-muted-foreground">
+              MOQ {product.moq} pcs · {inr(product.wholesalePrice * product.moq)} lot
+            </p>
+          </>
+        ) : (
+          <p className="flex items-baseline gap-2 text-sm">
+            <span className="font-semibold text-foreground">{inr(product.price)}</span>
+            <span className="text-xs text-muted-foreground line-through">{inr(product.mrp)}</span>
+          </p>
+        )}
       </div>
     </article>
   );

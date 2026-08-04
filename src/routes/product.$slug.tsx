@@ -107,16 +107,17 @@ function ProductPage() {
   const similar = products.filter((p) => p.slug !== product.slug && p.group === product.group).slice(0, 4);
   const fbt = products.filter((p) => p.slug !== product.slug).slice(0, 2);
   const bundle = product.price + fbt.reduce((n, p) => n + p.price, 0);
-  const recentList = recent.map(findProduct).filter(Boolean).slice(0, 4);
+  const recentList = recent.map((s) => findProduct(s)).filter(Boolean).slice(0, 4);
 
   const stock = stockFor(product);
   const delivery = deliveryEstimate();
-  const tiers = wholesaleTiers(product.price);
-  const bulk = wholesaleMode || qty >= MOQ;
-  const unitPrice = bulk ? wholesaleUnitPrice(product.price, qty) : product.price;
-  const savings = bulk ? bulkSavings(product.price, qty) : 0;
+  const tiers = wholesaleTiers(product);
+  const moq = product.moq;
+  const bulk = wholesaleMode || qty >= moq;
+  const unitPrice = bulk ? wholesaleUnitPrice(product, qty) : product.price;
+  const savings = bulk ? bulkSavings(product, qty) : 0;
   const enquiryText = encodeURIComponent(
-    `Hi Eagon Shop, I'd like a wholesale quotation for "${product.name}" (${size}, ${color}) — quantity ${Math.max(qty, MOQ)} pieces.`,
+    `Hi Eagon Shop, I'd like a wholesale quotation for "${product.name}" (${size}, ${color}) — quantity ${Math.max(qty, moq)} pieces.`,
   );
   const quoteSubject = encodeURIComponent(`Quotation request — ${product.name}`);
 
@@ -124,7 +125,8 @@ function ProductPage() {
     addToCart({
       slug: product.slug,
       name: product.name,
-      price: wholesale ? wholesaleUnitPrice(product.price, quantity) : product.price,
+      price: wholesale ? wholesaleUnitPrice(product, quantity) : product.price,
+
       image: product.images[0],
       size,
       color,

@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   Search,
@@ -14,10 +14,35 @@ import {
   BookmarkPlus,
   ChevronDown,
   Briefcase,
+  User,
 } from "lucide-react";
-import { inr, products } from "@/data/products";
-import { shopMenu, shippingFor } from "@/data/catalog";
+import { inr } from "@/data/products";
+import { shopMenu, shippingFor, DEFAULT_MOQ } from "@/data/catalog";
+import { useProducts } from "@/data/useCatalog";
 import { useShop } from "@/context/shop";
+
+function ModeToggle() {
+  const { wholesaleMode, setWholesaleMode } = useShop();
+  return (
+    <div className="flex items-center rounded-full border border-border p-0.5 text-[0.6rem] uppercase tracking-[0.14em]">
+      {(["Retail", "Wholesale"] as const).map((label) => {
+        const active = (label === "Wholesale") === wholesaleMode;
+        return (
+          <button
+            key={label}
+            type="button"
+            onClick={() => setWholesaleMode(label === "Wholesale")}
+            className={`rounded-full px-2.5 py-1 transition-colors ${
+              active ? "bg-primary text-primary-foreground" : "text-muted-foreground"
+            }`}
+          >
+            {label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
 
 export function Header() {
   const {
@@ -31,14 +56,17 @@ export function Header() {
     toggleTheme,
     wishlist,
     wholesaleMode,
+    user,
   } = useShop();
+  const products = useProducts();
+  const navigate = useNavigate();
   const [menu, setMenu] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const [cartOpen, setCartOpen] = useState(false);
   const [query, setQuery] = useState("");
 
   const results = query.trim()
-    ? products.filter((p) => p.name.toLowerCase().includes(query.trim().toLowerCase())).slice(0, 4)
+    ? products.filter((p) => p.name.toLowerCase().includes(query.trim().toLowerCase())).slice(0, 5)
     : [];
 
   const shipping = shippingFor(subtotal);
@@ -47,9 +75,10 @@ export function Header() {
     <>
       <div className="bg-primary py-2 text-center text-[0.65rem] uppercase tracking-[0.28em] text-primary-foreground">
         {wholesaleMode
-          ? "Wholesale pricing active · MOQ 10 pieces"
+          ? `Wholesale pricing active · MOQ ${DEFAULT_MOQ} pieces`
           : "Free shipping above ₹999 · Easy 7-day returns"}
       </div>
+
 
       <header className="glass sticky top-0 z-50">
         <div className="mx-auto grid max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-3 px-4 py-3 sm:px-6 lg:grid-cols-3">

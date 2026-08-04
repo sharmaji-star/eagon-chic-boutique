@@ -107,7 +107,9 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   const [recent, setRecent] = useLocal<string[]>("eagon.recent", []);
   const [orders, setOrders] = useLocal<Order[]>("eagon.orders", []);
   const [wholesale, setWholesale] = useLocal<WholesaleAccount | null>("eagon.wholesale", null);
-  const [wholesaleMode, setMode] = useLocal<boolean>("eagon.wholesaleMode", false);
+  // Wholesale-first store: bulk pricing is the default view.
+  const [wholesaleMode, setMode] = useLocal<boolean>("eagon.wholesaleMode", true);
+  const [user, setUser] = useLocal<UserAccount | null>("eagon.user", null);
   const [theme, setTheme] = useLocal<"light" | "dark">("eagon.theme", "light");
 
   useEffect(() => {
@@ -122,9 +124,13 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       recent,
       orders,
       wholesale,
-      wholesaleMode: wholesaleMode && wholesale !== null,
+      wholesaleMode,
+      user,
+      signIn: (account) => setUser(account),
+      signOut: () => setUser(null),
       theme,
       toggleTheme: () => setTheme((t) => (t === "dark" ? "light" : "dark")),
+
       addToCart: (line) =>
         setCart((prev) => {
           const idx = prev.findIndex(

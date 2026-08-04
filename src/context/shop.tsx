@@ -40,6 +40,12 @@ export type Order = {
   };
 };
 
+export type UserAccount = {
+  name: string;
+  email: string;
+  phone: string;
+};
+
 type ShopState = {
   cart: CartLine[];
   saved: CartLine[];
@@ -48,6 +54,9 @@ type ShopState = {
   orders: Order[];
   wholesale: WholesaleAccount | null;
   wholesaleMode: boolean;
+  user: UserAccount | null;
+  signIn: (user: UserAccount) => void;
+  signOut: () => void;
   addToCart: (line: CartLine) => void;
   removeLine: (index: number) => void;
   setQty: (index: number, qty: number) => void;
@@ -65,6 +74,7 @@ type ShopState = {
   theme: "light" | "dark";
   toggleTheme: () => void;
 };
+
 
 const ShopContext = createContext<ShopState | null>(null);
 

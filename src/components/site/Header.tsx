@@ -139,17 +139,28 @@ export function Header() {
           </Link>
 
           <div className="flex shrink-0 items-center justify-end gap-3 sm:gap-4">
+            <div className="hidden lg:block">
+              <ModeToggle />
+            </div>
+
             <details className="relative hidden sm:block">
               <summary className="list-none cursor-pointer">
                 <Search className="size-5" />
               </summary>
               <div className="glass absolute right-0 top-9 w-72 p-3">
-                <input
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search kurtis, dresses, co-ords…"
-                  className="w-full border-b border-border bg-transparent pb-2 text-sm outline-none"
-                />
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    if (query.trim()) navigate({ to: "/search", search: { q: query.trim() } });
+                  }}
+                >
+                  <input
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search kurtis, dresses, co-ords…"
+                    className="w-full border-b border-border bg-transparent pb-2 text-sm outline-none"
+                  />
+                </form>
                 <ul className="mt-2 space-y-2">
                   {results.map((p) => (
                     <li key={p.slug}>
@@ -164,12 +175,29 @@ export function Header() {
                     </li>
                   ))}
                 </ul>
+                {query.trim() && (
+                  <Link
+                    to="/search"
+                    search={{ q: query.trim() }}
+                    className="link-underline mt-3 inline-block text-xs uppercase tracking-[0.16em]"
+                  >
+                    See all results
+                  </Link>
+                )}
               </div>
             </details>
 
             <button type="button" aria-label="Toggle dark mode" onClick={toggleTheme}>
               {theme === "dark" ? <Sun className="size-5" /> : <Moon className="size-5" />}
             </button>
+
+            <Link
+              to="/account"
+              aria-label={user ? "My account" : "Sign in"}
+              className="relative hidden sm:block"
+            >
+              <User className="size-5" />
+            </Link>
 
             <Link to="/wishlist" aria-label="Wishlist" className="relative hidden sm:block">
               <Heart className="size-5" />
@@ -179,6 +207,7 @@ export function Header() {
                 </span>
               )}
             </Link>
+
 
             <button type="button" aria-label="Cart" onClick={() => setCartOpen(true)} className="relative">
               <ShoppingBag className="size-5" />

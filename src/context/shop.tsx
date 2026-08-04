@@ -188,7 +188,10 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       orders,
       wholesale,
       wholesaleMode,
+      user,
+      setUser,
       theme,
+
       setCart,
       setSaved,
       setWishlist,

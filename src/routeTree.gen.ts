@@ -15,6 +15,7 @@ import { Route as CartRouteImport } from './routes/cart'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as OrdersRouteImport } from './routes/orders'
+import { Route as SearchRouteImport } from './routes/search'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as WholesaleRouteImport } from './routes/wholesale'
 import { Route as WishlistRouteImport } from './routes/wishlist'
@@ -50,6 +51,11 @@ const OrdersRoute = OrdersRouteImport.update({
   path: '/orders',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ShopRoute = ShopRouteImport.update({
   id: '/shop',
   path: '/shop',
@@ -78,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/orders': typeof OrdersRoute
+  '/search': typeof SearchRoute
   '/shop': typeof ShopRoute
   '/wholesale': typeof WholesaleRoute
   '/wishlist': typeof WishlistRoute
@@ -90,6 +97,7 @@ export interface FileRoutesByTo {
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/orders': typeof OrdersRoute
+  '/search': typeof SearchRoute
   '/shop': typeof ShopRoute
   '/wholesale': typeof WholesaleRoute
   '/wishlist': typeof WishlistRoute
@@ -103,6 +111,7 @@ export interface FileRoutesById {
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/orders': typeof OrdersRoute
+  '/search': typeof SearchRoute
   '/shop': typeof ShopRoute
   '/wholesale': typeof WholesaleRoute
   '/wishlist': typeof WishlistRoute
@@ -117,6 +126,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/contact'
     | '/orders'
+    | '/search'
     | '/shop'
     | '/wholesale'
     | '/wishlist'
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/contact'
     | '/orders'
+    | '/search'
     | '/shop'
     | '/wholesale'
     | '/wishlist'
@@ -141,6 +152,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/contact'
     | '/orders'
+    | '/search'
     | '/shop'
     | '/wholesale'
     | '/wishlist'
@@ -154,6 +166,7 @@ export interface RootRouteChildren {
   CheckoutRoute: typeof CheckoutRoute
   ContactRoute: typeof ContactRoute
   OrdersRoute: typeof OrdersRoute
+  SearchRoute: typeof SearchRoute
   ShopRoute: typeof ShopRoute
   WholesaleRoute: typeof WholesaleRoute
   WishlistRoute: typeof WishlistRoute
@@ -204,6 +217,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrdersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/shop': {
       id: '/shop'
       path: '/shop'
@@ -242,6 +262,7 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutRoute: CheckoutRoute,
   ContactRoute: ContactRoute,
   OrdersRoute: OrdersRoute,
+  SearchRoute: SearchRoute,
   ShopRoute: ShopRoute,
   WholesaleRoute: WholesaleRoute,
   WishlistRoute: WishlistRoute,

@@ -230,7 +230,36 @@ export function Header() {
             </button>
           </div>
 
+          <div className="mt-5 flex items-center justify-between gap-3">
+            <ModeToggle />
+            <Link
+              to="/account"
+              onClick={() => setMenu(false)}
+              className="link-underline text-xs uppercase tracking-[0.16em]"
+            >
+              {user ? user.name.split(" ")[0] : "Sign in"}
+            </Link>
+          </div>
+
+          <form
+            className="mt-4"
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (!query.trim()) return;
+              setMenu(false);
+              navigate({ to: "/search", search: { q: query.trim() } });
+            }}
+          >
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search products…"
+              className="w-full border-b border-border bg-transparent pb-2 text-sm outline-none"
+            />
+          </form>
+
           <nav className="mt-8 space-y-6">
+
             {shopMenu.map((g) => (
               <div key={g.label}>
                 <Link

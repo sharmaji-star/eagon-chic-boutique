@@ -1,28 +1,67 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Truck, RotateCcw, ShieldCheck, Star } from "lucide-react";
-import heroAssetPointer from "@/assets/hero-purple-tunic.jpg.asset.json";
-import detail from "@/assets/detail-1.jpg";
+import { useState } from "react";
+import {
+  ArrowRight,
+  Truck,
+  RotateCcw,
+  ShieldCheck,
+  Star,
+  Factory,
+  Layers,
+  Sparkles,
+  Download,
+  Send,
+} from "lucide-react";
+import slide01 from "@/assets/slide-01.jpg.asset.json";
+import slide02 from "@/assets/slide-02.jpg.asset.json";
+import slide03 from "@/assets/slide-03.jpg.asset.json";
+import slide04 from "@/assets/slide-04.jpg.asset.json";
+import slide05 from "@/assets/slide-05.jpg.asset.json";
+import slide06 from "@/assets/slide-06.jpg.asset.json";
+import slide07 from "@/assets/slide-07.jpg.asset.json";
+import slide08 from "@/assets/slide-08.jpg.asset.json";
+import slide09 from "@/assets/slide-09.jpg.asset.json";
+import slide10 from "@/assets/slide-10.jpg.asset.json";
+import catalogPdf from "@/assets/eagon-catalog.pdf.asset.json";
 import { Reveal } from "@/components/site/Reveal";
+import { HeroSlider } from "@/components/site/HeroSlider";
 import { ProductCard } from "@/components/site/ProductCard";
 import { byTag, categories, products, reviewsList, type Product } from "@/data/products";
+import { CONTACT, DEFAULT_MOQ } from "@/data/catalog";
 
 const pick = (...lists: Product[][]) =>
   [...new Map(lists.flat().map((p) => [p.slug, p])).values()].slice(0, 4);
 
+const slides = [
+  slide01,
+  slide02,
+  slide03,
+  slide04,
+  slide05,
+  slide06,
+  slide07,
+  slide08,
+  slide09,
+  slide10,
+].map((a, i) => ({ src: a.url, alt: `Eagon Shop wholesale collection look ${i + 1}` }));
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Eagon Shop — Affordable Luxury Womenswear Online" },
+      { title: "Eagon Shop — Wholesale & Retail Fashion Supplier in India" },
       {
         name: "description",
         content:
-          "Shop Eagon Shop's edit of western and Indian wear for women — dresses, kurtis, co-ord sets and plazo. Free shipping above ₹999, 7-day returns.",
+          "Factory-direct wholesale fashion from Eagon Shop — kurtis, co-ord sets, dresses and ethnic sets. MOQ 50 pieces, fast dispatch across India, retail & wholesale pricing.",
       },
-      { property: "og:title", content: "Eagon Shop — Affordable Luxury Womenswear Online" },
+      { property: "og:title", content: "Eagon Shop — Wholesale & Retail Fashion Supplier in India" },
       {
         property: "og:description",
-        content: "Shop Eagon Shop's edit of western and Indian wear for women — dresses, kurtis, co-ord sets and plazo. Free shipping above ₹999, 7-day returns.",
+        content:
+          "Factory-direct wholesale fashion — kurtis, co-ord sets, dresses and ethnic sets. MOQ 50 pieces with fast dispatch across India.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: "/" },
     ],
     links: [{ rel: "canonical", href: "/" }],
@@ -33,12 +72,16 @@ export const Route = createFileRoute("/")({
 function SectionHead({ eyebrow, title, href }: { eyebrow: string; title: string; href?: string }) {
   return (
     <div className="mb-8 flex items-end justify-between gap-4">
-      <div>
+      <div className="min-w-0">
         <p className="eyebrow">{eyebrow}</p>
         <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">{title}</h2>
       </div>
       {href && (
-        <Link to="/shop" search={{}} className="link-underline shrink-0 text-xs uppercase tracking-[0.2em]">
+        <Link
+          to="/shop"
+          search={{}}
+          className="link-underline shrink-0 text-xs uppercase tracking-[0.2em]"
+        >
           View all
         </Link>
       )}
@@ -46,50 +89,101 @@ function SectionHead({ eyebrow, title, href }: { eyebrow: string; title: string;
   );
 }
 
+function InquiryForm() {
+  const [sent, setSent] = useState(false);
+  const [form, setForm] = useState({ name: "", business: "", mobile: "", city: "", gst: "" });
+  const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) =>
+    setForm({ ...form, [k]: e.target.value });
+
+  const fields: { key: keyof typeof form; label: string; required?: boolean; type?: string }[] = [
+    { key: "name", label: "Your name", required: true },
+    { key: "business", label: "Business name", required: true },
+    { key: "mobile", label: "Mobile number", required: true, type: "tel" },
+    { key: "city", label: "City", required: true },
+    { key: "gst", label: "GST number (optional)" },
+  ];
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        const text = `Wholesale enquiry%0AName: ${form.name}%0ABusiness: ${form.business}%0AMobile: ${form.mobile}%0ACity: ${form.city}%0AGST: ${form.gst || "—"}`;
+        window.open(`${CONTACT.whatsappChat}?text=${text}`, "_blank", "noopener");
+        setSent(true);
+      }}
+      className="glass grid gap-3 p-6 sm:grid-cols-2"
+    >
+      {fields.map((f) => (
+        <label key={f.key} className={`block ${f.key === "gst" ? "sm:col-span-2" : ""}`}>
+          <span className="eyebrow">{f.label}</span>
+          <input
+            type={f.type ?? "text"}
+            required={f.required}
+            value={form[f.key]}
+            onChange={set(f.key)}
+            className="mt-1.5 w-full border-b border-border bg-transparent pb-2 text-sm outline-none focus:border-gold"
+          />
+        </label>
+      ))}
+      <div className="sm:col-span-2 flex flex-wrap items-center gap-4">
+        <button
+          type="submit"
+          className="inline-flex items-center gap-2 bg-primary px-7 py-3.5 text-xs font-semibold uppercase tracking-[0.22em] text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
+        >
+          <Send className="size-3.5" /> Send enquiry
+        </button>
+        {sent && <span className="text-xs text-muted-foreground">Thanks — we'll be in touch.</span>}
+      </div>
+    </form>
+  );
+}
+
 function Home() {
   return (
     <main>
-      <section className="relative">
-        <img
-          src={heroAssetPointer.url}
-          alt="Model wearing a purple floral printed tunic with teal tapered trousers"
-          width={886}
-          height={1181}
-          className="h-[86vh] min-h-[520px] w-full object-cover object-[50%_25%]"
-        />
-        <div className="hero-veil absolute inset-0" />
-        <div className="absolute inset-0 flex items-center">
-          <div className="mx-auto w-full max-w-7xl px-6">
-            <div className="max-w-md">
-              <p className="eyebrow">Autumn Edit 2026</p>
-              <h1 className="mt-4 text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
+      <HeroSlider slides={slides} />
+
+      {/* Hero copy — two column */}
+      <section className="mx-auto max-w-7xl px-6 py-14">
+        <Reveal>
+          <div className="grid items-center gap-10 md:grid-cols-[1.15fr_0.85fr]">
+            <div className="min-w-0">
+              <p className="eyebrow">Wholesale first · Since 2019</p>
+              <h1 className="mt-4 text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl">
                 Quiet luxury,
-                <span className="block text-gold-gradient">everyday price.</span>
+                <span className="block text-gold-gradient">wholesale price.</span>
               </h1>
-              <p className="mt-5 max-w-sm text-sm text-muted-foreground sm:text-base">
-                Considered western and Indian silhouettes for women — refined fabrics, honest pricing,
-                delivered across India.
+              <p className="mt-5 max-w-xl text-sm text-muted-foreground sm:text-base">
+                Factory-direct western and Indian womenswear for retailers, boutiques and resellers.
+                Editorial-grade fabrics, honest per-piece rates from MOQ {DEFAULT_MOQ} pieces, shipped
+                across India.
               </p>
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Link
-                  to="/shop"
-                  search={{}}
-                  className="group inline-flex items-center gap-3 bg-primary px-8 py-4 text-xs font-semibold uppercase tracking-[0.24em] text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
-                >
-                  Shop Now
-                  <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
-                </Link>
-                <Link
-                  to="/shop"
-                  search={{ group: "Indian Wear" }}
-                  className="link-underline text-xs uppercase tracking-[0.24em]"
-                >
-                  Explore Indian wear
-                </Link>
-              </div>
+            </div>
+            <div className="flex flex-col gap-3 md:items-end">
+              <Link
+                to="/shop"
+                search={{}}
+                className="group inline-flex w-full items-center justify-center gap-3 bg-primary px-8 py-4 text-xs font-semibold uppercase tracking-[0.24em] text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5 md:w-auto"
+              >
+                Shop the collection
+                <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+              <Link
+                to="/wholesale"
+                className="inline-flex w-full items-center justify-center gap-3 border border-border px-8 py-4 text-xs font-semibold uppercase tracking-[0.24em] transition-colors duration-300 hover:bg-secondary md:w-auto"
+              >
+                Become a wholesale partner
+              </Link>
+              <Link
+                to="/shop"
+                search={{ group: "Indian Wear" }}
+                className="link-underline mt-1 text-xs uppercase tracking-[0.24em]"
+              >
+                Explore Indian wear
+              </Link>
             </div>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       <section className="border-y border-border bg-secondary/50">
@@ -107,9 +201,21 @@ function Home() {
         </div>
       </section>
 
+      {/* New Arrivals — directly below the hero */}
       <section className="mx-auto max-w-7xl px-6 py-20">
-        <SectionHead eyebrow="Shop by category" title="Featured Categories" />
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-3">
+        <SectionHead eyebrow="Just landed" title="New Arrivals" href="/shop" />
+        <div className="grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-4">
+          {pick(byTag("new"), products.slice(2)).map((p, i) => (
+            <Reveal key={p.slug} delay={i * 70}>
+              <ProductCard product={p} />
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 pb-20">
+        <SectionHead eyebrow="Shop by category" title="New Collection" />
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
           {categories.map((c, i) => (
             <Reveal key={c.slug} delay={i * 60}>
               <Link
@@ -151,18 +257,26 @@ function Home() {
         <div className="marquee-track flex w-max gap-10 text-xs uppercase tracking-[0.32em]">
           {Array.from({ length: 2 }).map((_, k) => (
             <div key={k} className="flex gap-10">
-              {["New arrivals weekly", "Made in India", "Sizes XS–XXL", "Fabric-first design", "COD available"].map(
-                (t) => (
-                  <span key={t}>{t}</span>
-                ),
-              )}
+              {[
+                "New arrivals weekly",
+                "Made in India",
+                `MOQ ${DEFAULT_MOQ} pcs`,
+                "Factory direct pricing",
+                "COD available",
+              ].map((t) => (
+                <span key={t}>{t}</span>
+              ))}
             </div>
           ))}
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-20">
-        <SectionHead eyebrow="Customer favourites" title="Best Sellers" href="/shop" />
+        <SectionHead
+          eyebrow="Customer favourites"
+          title="Designed to Impress. Priced to Delight."
+          href="/shop"
+        />
         <div className="grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-4">
           {pick(byTag("bestseller"), products).map((p, i) => (
             <Reveal key={p.slug} delay={i * 70}>
@@ -172,60 +286,66 @@ function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 pb-20">
-        <SectionHead eyebrow="Just landed" title="New Arrivals" href="/shop" />
-        <div className="grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-4">
-          {pick(byTag("new"), products.slice(2)).map((p, i) => (
-            <Reveal key={p.slug} delay={i * 70}>
-              <ProductCard product={p} />
-            </Reveal>
-          ))}
+      {/* Why Choose Eagon */}
+      <section className="border-y border-border bg-secondary/40">
+        <div className="mx-auto max-w-7xl px-6 py-20">
+          <Reveal>
+            <p className="eyebrow">Wholesale advantage</p>
+            <h2 className="mt-3 max-w-xl text-3xl font-semibold tracking-tight sm:text-4xl">
+              Why choose <span className="text-gold-gradient">Eagon</span>
+            </h2>
+          </Reveal>
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                icon: Factory,
+                title: "Factory Direct Pricing",
+                text: "No middlemen. Per-piece rates straight from our production floor.",
+              },
+              {
+                icon: Layers,
+                title: `MOQ ${DEFAULT_MOQ} Pieces`,
+                text: "Start small, scale fast — tiered discounts as your quantity grows.",
+              },
+              {
+                icon: Truck,
+                title: "Fast Dispatch Across India",
+                text: "Ready stock dispatched in 24–72 hours to every pin code.",
+              },
+              {
+                icon: Sparkles,
+                title: "Premium Quality Assurance",
+                text: "Every lot checked for stitching, fabric and colour consistency.",
+              },
+            ].map((f, i) => (
+              <Reveal key={f.title} delay={i * 70}>
+                <div className="glass h-full p-6">
+                  <f.icon className="size-5 text-gold" />
+                  <h3 className="mt-4 text-base font-semibold tracking-tight">{f.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{f.text}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <div className="mt-10 flex flex-wrap gap-4">
+            <Link
+              to="/shop"
+              search={{}}
+              className="inline-flex items-center gap-3 bg-primary px-8 py-4 text-xs font-semibold uppercase tracking-[0.24em] text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
+            >
+              View wholesale collection
+            </Link>
+            <Link
+              to="/wholesale"
+              className="inline-flex items-center gap-3 border border-border px-8 py-4 text-xs font-semibold uppercase tracking-[0.24em] transition-colors duration-300 hover:bg-secondary"
+            >
+              Become a wholesale partner
+            </Link>
+          </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 pb-20">
-        <Reveal>
-          <div className="grid items-center gap-0 overflow-hidden bg-secondary md:grid-cols-2">
-            <img
-              src={detail}
-              alt="Folded beige and black clothing with gold jewellery"
-              loading="lazy"
-              width={1000}
-              height={1000}
-              className="h-full w-full object-cover"
-            />
-            <div className="p-8 sm:p-12">
-              <p className="eyebrow">Limited time</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight">Festive edit up to 45% off</h2>
-              <p className="mt-4 text-sm text-muted-foreground">
-                Use code <span className="font-semibold text-foreground">EAGON45</span> at checkout.
-                Ends Sunday, or while stocks last.
-              </p>
-              <div className="mt-6 flex gap-3">
-                {[
-                  { v: "02", l: "Days" },
-                  { v: "14", l: "Hrs" },
-                  { v: "38", l: "Min" },
-                ].map((t) => (
-                  <div key={t.l} className="glass px-4 py-3 text-center">
-                    <p className="text-xl font-semibold">{t.v}</p>
-                    <p className="eyebrow">{t.l}</p>
-                  </div>
-                ))}
-              </div>
-              <Link
-                to="/shop"
-                search={{}}
-                className="mt-8 inline-block bg-primary px-8 py-4 text-xs font-semibold uppercase tracking-[0.24em] text-primary-foreground"
-              >
-                Shop the offer
-              </Link>
-            </div>
-          </div>
-        </Reveal>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-6 pb-20">
+      <section className="mx-auto max-w-7xl px-6 py-20">
         <SectionHead eyebrow="4.8 average rating" title="Customer Reviews" />
         <div className="grid gap-4 md:grid-cols-3">
           {reviewsList.map((r, i) => (
@@ -249,14 +369,12 @@ function Home() {
       <section className="mx-auto max-w-7xl px-6 pb-20">
         <SectionHead eyebrow="@eagonshop" title="Styled by you" />
         <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
-          {categories.slice(0, 6).map((c, i) => (
-            <Reveal key={`gram-${c.slug}`} delay={i * 50}>
+          {slides.slice(0, 6).map((s, i) => (
+            <Reveal key={`gram-${s.src}`} delay={i * 50}>
               <img
-                src={c.image}
-                alt={`Eagon Shop customer wearing ${c.name}`}
+                src={s.src}
+                alt={`Eagon Shop stockist look ${i + 1}`}
                 loading="lazy"
-                width={900}
-                height={1200}
                 className="aspect-square w-full object-cover transition-transform duration-500 hover:scale-105"
               />
             </Reveal>
@@ -264,32 +382,37 @@ function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-6 pb-24 text-center">
+      {/* Wholesale network */}
+      <section className="mx-auto max-w-5xl px-6 pb-24">
         <Reveal>
-          <p className="eyebrow">Newsletter</p>
-          <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
-            Get ₹200 off your first order
-          </h2>
-          <p className="mt-3 text-sm text-muted-foreground">
-            Early access to drops, private sales and styling notes. No spam, ever.
-          </p>
-          <form
-            onSubmit={(e) => e.preventDefault()}
-            className="glass mx-auto mt-7 flex max-w-md items-center gap-2 p-2"
-          >
-            <input
-              type="email"
-              required
-              placeholder="you@email.com"
-              className="min-w-0 flex-1 bg-transparent px-3 py-2 text-sm outline-none"
-            />
-            <button
-              type="submit"
-              className="shrink-0 bg-primary px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary-foreground"
-            >
-              Join
-            </button>
-          </form>
+          <div className="text-center">
+            <p className="eyebrow">B2B partnership</p>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+              Join India's Trusted Wholesale Network
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground">
+              Get partner rates, priority stock allocation and new-drop catalogues before anyone else.
+            </p>
+            <div className="mt-7 flex flex-wrap justify-center gap-4">
+              <Link
+                to="/wholesale"
+                className="inline-flex items-center gap-3 bg-primary px-8 py-4 text-xs font-semibold uppercase tracking-[0.24em] text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
+              >
+                Register as wholesale buyer
+              </Link>
+              <a
+                href={catalogPdf.url}
+                target="_blank"
+                rel="noopener"
+                className="inline-flex items-center gap-2 border border-border px-8 py-4 text-xs font-semibold uppercase tracking-[0.24em] transition-colors duration-300 hover:bg-secondary"
+              >
+                <Download className="size-3.5" /> Download latest catalog
+              </a>
+            </div>
+          </div>
+          <div className="mt-10">
+            <InquiryForm />
+          </div>
         </Reveal>
       </section>
     </main>

@@ -143,6 +143,10 @@ export function Header() {
               <ModeToggle />
             </div>
 
+            <Link to="/search" search={{}} aria-label="Search" className="sm:hidden">
+              <Search className="size-[1.35rem]" />
+            </Link>
+
             <details className="relative hidden sm:block">
               <summary className="list-none cursor-pointer">
                 <Search className="size-5" />
@@ -187,7 +191,12 @@ export function Header() {
               </div>
             </details>
 
-            <button type="button" aria-label="Toggle dark mode" onClick={toggleTheme}>
+            <button
+              type="button"
+              aria-label="Toggle dark mode"
+              onClick={toggleTheme}
+              className="hidden sm:block"
+            >
               {theme === "dark" ? <Sun className="size-5" /> : <Moon className="size-5" />}
             </button>
 
@@ -199,8 +208,8 @@ export function Header() {
               <User className="size-5" />
             </Link>
 
-            <Link to="/wishlist" aria-label="Wishlist" className="relative hidden sm:block">
-              <Heart className="size-5" />
+            <Link to="/wishlist" aria-label="Wishlist" className="relative">
+              <Heart className="size-[1.35rem] sm:size-5" />
               {wishlist.length > 0 && (
                 <span className="absolute -right-2 -top-2 grid size-4 place-items-center rounded-full bg-gold text-[0.6rem] text-primary-foreground">
                   {wishlist.length}
@@ -210,7 +219,7 @@ export function Header() {
 
 
             <button type="button" aria-label="Cart" onClick={() => setCartOpen(true)} className="relative">
-              <ShoppingBag className="size-5" />
+              <ShoppingBag className="size-[1.35rem] sm:size-5" />
               {cartCount > 0 && (
                 <span className="absolute -right-2 -top-2 grid size-4 place-items-center rounded-full bg-gold text-[0.6rem] font-semibold text-primary-foreground">
                   {cartCount}
@@ -232,6 +241,9 @@ export function Header() {
 
           <div className="mt-5 flex items-center justify-between gap-3">
             <ModeToggle />
+            <button type="button" aria-label="Toggle dark mode" onClick={toggleTheme}>
+              {theme === "dark" ? <Sun className="size-5" /> : <Moon className="size-5" />}
+            </button>
             <Link
               to="/account"
               onClick={() => setMenu(false)}
